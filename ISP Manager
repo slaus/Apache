@@ -1,0 +1,22 @@
+Исчез пункт меню "Базы данных"
+
+Первый способ: 
+Проверяем свободное место: $ df -h 
+Если места недостаточно, переходим к пункту Третий способ. 
+Заходим в раздел "Серверы Баз Данных", дважды щелкаем по пункту MySQL и в форме сразу нажимаем [OK].
+
+Второй способ:
+Перегружаем mysql: $ /etc/init.d/mysql restart
+перезапускаем ISPmanager: $ killall ispmgr
+
+Третий способ, если еще и не можете зайти в phpmyadmin под root и выскакивает ошибка #1045 "Невозможно подключиться к серверу MySQL":
+Останавливаем mysql: $ /etc/init.d/mysql stop
+Запускаем mysql через команду: $ /usr/bin/mysqld_safe --skip-grant-tables --user=root &
+Запускаем mysql от root: $ mysql -u root
+Меняем пароль, обновляем привилегии пользователей mysql и выходим: 
+mysql> update mysql.user set Password=PASSWORD('oKptW6sMxF1Q5RAZ') WHERE User='root';
+mysql> flush privileges;
+mysql> exit
+
+Перезапускаем mysql: $ /etc/init.d/mysql restart
+Проверяем: $ mysql -u root -p
